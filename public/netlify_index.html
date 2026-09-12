@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="my" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Version | Cinema & Series Streaming Hub</title>
+    <meta name="description" content="Family Version cinema streaming platform with Discover, Trending, Series, and Collections. Instant access via Telegram.">
+    <meta property="og:title" content="Family Version">
+    <meta property="og:description" content="Stream latest movies and series with instant Telegram access.">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link rel="apple-touch-icon" href="./family_version_icon.jpg">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #070709;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        .glass-nav {
+            background: rgba(7, 7, 9, 0.90);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .active-tab {
+            background-color: #dc2626 !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.4);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-red-600 selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <nav class="glass-nav fixed top-0 w-full z-50 px-4 sm:px-8 py-3.5 transition-all">
+        <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
+            
+            <!-- Custom Branded Logo: Family Version -->
+            <a href="#home" onclick="navigateToTab('All'); return false;" class="flex items-center gap-2.5 group shrink-0 transition-opacity hover:opacity-95" title="Family Version - Home">
+                <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden shadow-lg shadow-red-600/30 border border-white/15 group-hover:scale-105 transition-transform shrink-0 bg-[#09090b] flex items-center justify-center">
+                    <img src="./family_version_icon.jpg" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <svg viewBox="0 0 40 40" class="w-full h-full p-1" style="display:none;" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="15" y1="12" x2="8" y2="5" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" />
+                        <circle cx="7.5" cy="4.5" r="2.2" fill="#EF4444" />
+                        <line x1="25" y1="12" x2="32" y2="5" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" />
+                        <circle cx="32.5" cy="4.5" r="2.2" fill="#EF4444" />
+                        <path d="M12 12C12 10.5 14 9.5 20 9.5C26 9.5 28 10.5 28 12H12Z" fill="#EF4444" />
+                        <rect x="6" y="12" width="28" height="20" rx="5" fill="#18181B" stroke="#EF4444" stroke-width="1.8" />
+                        <rect x="9" y="14.5" width="22" height="15" rx="3.5" fill="#09090B" />
+                        <polygon points="18,18 24,22 18,26" fill="#EF4444" />
+                        <rect x="13" y="33" width="14" height="2.2" rx="1.1" fill="#EF4444" />
+                    </svg>
+                </div>
+                <div class="flex flex-col justify-center leading-none select-none">
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-lg sm:text-xl font-black tracking-tight text-white font-sans">Family</span>
+                        <span class="text-lg sm:text-xl font-black tracking-tight text-red-500 font-sans">Version</span>
+                    </div>
+                    <span class="text-[11px] sm:text-xs font-semibold tracking-widest text-zinc-400 uppercase font-sans mt-0.5 flex items-center gap-1">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                        Cinema Hub
+                    </span>
+                </div>
+            </a>
+            
+            <!-- Desktop Navigation Tabs -->
+            <div class="hidden lg:flex items-center gap-1.5 bg-zinc-900/80 p-1.5 rounded-2xl border border-white/5">
+                <button onclick="navigateToTab('All')" id="nav-tab-all" class="nav-tab active-tab px-4 py-2 rounded-xl text-xs font-bold text-zinc-300 transition hover:text-white flex items-center gap-1.5">
+                    <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+                    <span>Discover</span>
+                    <span id="badge-all" class="text-[10px] bg-black/40 px-1.5 py-0.2 rounded-full font-mono">0</span>
+                </button>
+                <button onclick="navigateToTab('Movies')" id="nav-tab-movies" class="nav-tab px-4 py-2 rounded-xl text-xs font-bold text-zinc-400 transition hover:text-white flex items-center gap-1.5">
+                    <i data-lucide="film" class="w-3.5 h-3.5 text-red-400"></i>
+                    <span>Movies</span>
+                    <span id="badge-movies" class="text-[10px] bg-black/40 px-1.5 py-0.2 rounded-full font-mono">0</span>
+                </button>
+                <button onclick="navigateToTab('Series')" id="nav-tab-series" class="nav-tab px-4 py-2 rounded-xl text-xs font-bold text-zinc-400 transition hover:text-white flex items-center gap-1.5">
+                    <i data-lucide="tv" class="w-3.5 h-3.5 text-purple-400"></i>
+                    <span>Series</span>
+                    <span id="badge-series" class="text-[10px] bg-black/40 px-1.5 py-0.2 rounded-full font-mono">0</span>
+                </button>
+                <button onclick="navigateToTab('Trending')" id="nav-tab-trending" class="nav-tab px-4 py-2 rounded-xl text-xs font-bold text-zinc-400 transition hover:text-white flex items-center gap-1.5">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span>Trending</span>
+                    <span id="badge-trending" class="text-[10px] bg-black/40 px-1.5 py-0.2 rounded-full font-mono">0</span>
+                </button>
+                <button onclick="navigateToTab('Collections')" id="nav-tab-collections" class="nav-tab px-4 py-2 rounded-xl text-xs font-bold text-zinc-400 transition hover:text-white flex items-center gap-1.5">
+                    <i data-lucide="folder-archive" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    <span>Collections</span>
+                    <span id="badge-collections" class="text-[10px] bg-black/40 px-1.5 py-0.2 rounded-full font-mono">0</span>
+                </button>
+            </div>
+
+            <!-- Action Buttons: Telegram Channel & Mobile Hamburger -->
+            <div class="flex items-center gap-2 sm:gap-2.5">
+                <a href="https://t.me/addlist/58gZNGQ86uJiOWE9" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-lg shadow-red-600/30">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Join Channel</span>
+                </a>
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl bg-zinc-900 border border-white/10 text-zinc-300 hover:text-white" aria-label="Toggle menu">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden pt-4 pb-2 space-y-3 border-t border-white/10 mt-3">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <button onclick="navigateToTab('All'); toggleMobileMenu();" id="m-nav-tab-all" class="mobile-nav-tab p-3 rounded-xl text-xs font-bold bg-red-600 text-white shadow-md flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+                        <span>Discover</span>
+                    </div>
+                    <span id="m-badge-all" class="text-[10px] bg-black/40 px-1.5 py-0.5 rounded-full font-mono">0</span>
+                </button>
+                <button onclick="navigateToTab('Movies'); toggleMobileMenu();" id="m-nav-tab-movies" class="mobile-nav-tab p-3 rounded-xl text-xs font-bold bg-zinc-900 text-zinc-300 border border-white/5 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <i data-lucide="film" class="w-3.5 h-3.5 text-red-400"></i>
+                        <span>Movies</span>
+                    </div>
+                    <span id="m-badge-movies" class="text-[10px] bg-black/40 px-1.5 py-0.5 rounded-full font-mono">0</span>
+                </button>
+                <button onclick="navigateToTab('Series'); toggleMobileMenu();" id="m-nav-tab-series" class="mobile-nav-tab p-3 rounded-xl text-xs font-bold bg-zinc-900 text-zinc-300 border border-white/5 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <i data-lucide="tv" class="w-3.5 h-3.5 text-purple-400"></i>
+                        <span>Series</span>
+                    </div>
+                    <span id="m-badge-series" class="text-[10px] bg-black/40 px-1.5 py-0.5 rounded-full font-mono">0</span>
+                </button>
+                <button onclick="navigateToTab('Trending'); toggleMobileMenu();" id="m-nav-tab-trending" class="mobile-nav-tab p-3 rounded-xl text-xs font-bold bg-zinc-900 text-zinc-300 border border-white/5 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span>Trending</span>
+                    </div>
+                    <span id="m-badge-trending" class="text-[10px] bg-black/40 px-1.5 py-0.5 rounded-full font-mono">0</span>
+                </button>
+                <button onclick="navigateToTab('Collections'); toggleMobileMenu();" id="m-nav-tab-collections" class="mobile-nav-tab p-3 rounded-xl text-xs font-bold bg-zinc-900 text-zinc-300 border border-white/5 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <i data-lucide="folder-archive" class="w-3.5 h-3.5 text-emerald-400"></i>
+                        <span>Collections</span>
+                    </div>
+                    <span id="m-badge-collections" class="text-[10px] bg-black/40 px-1.5 py-0.5 rounded-full font-mono">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Horizontal Tabs Bar (sticky below nav on small screens) -->
+    <div class="lg:hidden fixed top-[60px] left-0 right-0 z-40 bg-[#070709]/95 backdrop-blur-xl border-b border-white/5 px-4 py-2 overflow-x-auto no-scrollbar flex items-center gap-1.5">
+        <button id="m-pill-all" onclick="navigateToTab('All')" class="mobile-pill-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-red-600 text-white shadow-md">
+            <i data-lucide="compass" class="w-3 h-3"></i>
+            <span>Discover</span>
+        </button>
+        <button id="m-pill-movies" onclick="navigateToTab('Movies')" class="mobile-pill-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-zinc-900 text-zinc-400 hover:text-white">
+            <i data-lucide="film" class="w-3 h-3 text-red-400"></i>
+            <span>Movies</span>
+        </button>
+        <button id="m-pill-series" onclick="navigateToTab('Series')" class="mobile-pill-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-zinc-900 text-zinc-400 hover:text-white">
+            <i data-lucide="tv" class="w-3 h-3 text-purple-400"></i>
+            <span>Series</span>
+        </button>
+        <button id="m-pill-trending" onclick="navigateToTab('Trending')" class="mobile-pill-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-zinc-900 text-zinc-400 hover:text-white">
+            <i data-lucide="sparkles" class="w-3 h-3 text-amber-400"></i>
+            <span>Trending</span>
+        </button>
+        <button id="m-pill-collections" onclick="navigateToTab('Collections')" class="mobile-pill-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-zinc-900 text-zinc-400 hover:text-white">
+            <i data-lucide="folder-archive" class="w-3 h-3 text-emerald-400"></i>
+            <span>Collections</span>
+        </button>
+    </div>
+
+    <!-- App Container: Switched between Catalog View and Movie Detail View -->
+    <div id="catalog-view" class="w-full">
+        
+        <!-- Hero Section (Visible only on Home 'All' Tab) -->
+        <section id="hero-section" class="relative w-full pt-16 min-h-[65vh] sm:min-h-[72vh] flex items-center overflow-hidden bg-[#070709]">
+            <div class="absolute inset-0 z-0">
+                <img id="hero-backdrop" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1600" alt="Backdrop" class="w-full h-full object-cover filter brightness-[0.35] contrast-125 scale-105 transition-transform duration-1000 ease-out">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#070709] via-[#070709]/70 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#070709] via-[#070709]/80 to-transparent"></div>
+                <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#070709] to-transparent"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-24 w-full flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-12">
+                <div class="flex-1 max-w-2xl space-y-4 text-left">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-red-600 text-white shadow-lg shadow-red-600/30">
+                            <i data-lucide="flame" class="w-3.5 h-3.5 fill-current"></i>
+                            SPOTLIGHT PREMIERE
+                        </span>
+                        <span id="hero-rating-badge" class="hidden inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/10 text-amber-300 border border-amber-500/30">
+                            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                            <span id="hero-rating-text">8.5</span>
+                        </span>
+                        <span id="hero-format-tag" class="text-xs font-bold text-zinc-400 uppercase tracking-widest hidden sm:inline-block">
+                            • MOVIE
+                        </span>
+                    </div>
+
+                    <h1 id="hero-title" class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-none drop-shadow-2xl">
+                        Loading Premiere...
+                    </h1>
+
+                    <div class="flex flex-wrap items-center gap-2.5 text-xs text-zinc-300 font-medium">
+                        <span id="hero-year" class="bg-white/10 px-2 py-0.5 rounded text-zinc-200 font-bold">2026</span>
+                        <span class="text-zinc-500">•</span>
+                        <span id="hero-genre" class="capitalize text-zinc-200">Action, Cinema</span>
+                        <span class="text-zinc-500">•</span>
+                        <span id="hero-category-tag" class="text-amber-400 font-bold uppercase tracking-wider">#TRENDING</span>
+                    </div>
+
+                    <p id="hero-synopsis" class="text-sm sm:text-base text-zinc-300 line-clamp-3 max-w-xl leading-relaxed">
+                        Experience high-fidelity cinema streaming directly on your personal devices with instant Telegram access.
+                    </p>
+
+                    <!-- 3 Action Buttons -->
+                    <div class="pt-2 flex flex-wrap items-center gap-3">
+                        <a id="hero-watch-btn" href="#" target="_blank" rel="noopener noreferrer" class="py-3.5 px-6 sm:px-8 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-extrabold text-sm sm:text-base flex items-center gap-2.5 shadow-xl shadow-red-600/30 transition-all hover:scale-105 active:scale-95">
+                            <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+                            <span>Watch Now</span>
+                        </a>
+
+                        <button onclick="openHeroMoreInfo()" class="py-3.5 px-5 sm:px-6 rounded-2xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-200 hover:text-white font-bold text-sm sm:text-base flex items-center gap-2 border border-white/10 hover:border-white/20 backdrop-blur-md transition-all hover:scale-105 active:scale-95">
+                            <i data-lucide="info" class="w-4 h-4 text-zinc-400"></i>
+                            <span>More Info</span>
+                        </button>
+
+                        <a id="hero-tg-link" href="https://t.me/addlist/58gZNGQ86uJiOWE9" target="_blank" rel="noopener noreferrer" class="py-3.5 px-4 rounded-2xl bg-black/40 hover:bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-white/5 transition-all flex items-center gap-2 text-xs font-semibold">
+                            <i data-lucide="send" class="w-3.5 h-3.5 text-blue-400"></i>
+                            <span class="hidden sm:inline">Telegram Stream</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hidden md:block shrink-0 w-64 lg:w-72">
+                    <div onclick="openHeroMoreInfo()" class="group relative aspect-[2/3] rounded-3xl overflow-hidden shadow-2xl shadow-black/90 border-2 border-white/15 bg-zinc-900 cursor-pointer transform hover:scale-105 transition-all duration-500 hover:border-red-500/50">
+                        <img id="hero-poster-img" src="" alt="Poster" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-8 py-8 relative z-20">
+            
+            <!-- Skeleton Loader Placeholder -->
+            <div id="loading-skeleton" class="animate-pulse space-y-8 py-8">
+                <div class="flex justify-between items-center">
+                    <div class="w-48 h-8 rounded-xl bg-zinc-800/80"></div>
+                    <div class="w-24 h-8 rounded-xl bg-zinc-800/50"></div>
+                </div>
+                <div class="flex gap-4 overflow-hidden">
+                    <div class="w-48 shrink-0 aspect-[2/3] rounded-2xl bg-zinc-800/60"></div>
+                    <div class="w-48 shrink-0 aspect-[2/3] rounded-2xl bg-zinc-800/60"></div>
+                    <div class="w-48 shrink-0 aspect-[2/3] rounded-2xl bg-zinc-800/60"></div>
+                    <div class="w-48 shrink-0 aspect-[2/3] rounded-2xl bg-zinc-800/60"></div>
+                    <div class="w-48 shrink-0 aspect-[2/3] rounded-2xl bg-zinc-800/60"></div>
+                </div>
+            </div>
+
+            <!-- REQUIREMENT 1: Trending Preview Rows (Shown ONLY on Home 'All' Tab) -->
+            <div id="home-trending-preview-container" class="space-y-4 mb-12">
+                <!-- 1. Trending Movies Carousel Row -->
+                <section id="trending-movies-row" class="w-full relative">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl sm:text-2xl select-none">🔥</span>
+                            <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">Trending Movies</h2>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-1 mr-1">
+                                <button onclick="scrollRow('trending-movies-carousel', -380)" title="Previous" class="p-1.5 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/10 transition-all">
+                                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="scrollRow('trending-movies-carousel', 380)" title="Next" class="p-1.5 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/10 transition-all">
+                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <button onclick="navigateToTab('Trending')" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm transition-all shadow-md shadow-blue-600/20">
+                                View All
+                            </button>
+                        </div>
+                    </div>
+                    <div id="trending-movies-carousel" class="flex gap-4 sm:gap-5 overflow-x-auto pb-4 pt-1 scroll-smooth no-scrollbar select-none"></div>
+                </section>
+
+                <!-- 2. Trending Series Carousel Row -->
+                <section id="trending-series-row" class="w-full relative">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl sm:text-2xl select-none">📺</span>
+                            <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">Trending Series</h2>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-1 mr-1">
+                                <button onclick="scrollRow('trending-series-carousel', -380)" title="Previous" class="p-1.5 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/10 transition-all">
+                                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="scrollRow('trending-series-carousel', 380)" title="Next" class="p-1.5 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/10 transition-all">
+                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <button onclick="navigateToTab('Series')" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm transition-all shadow-md shadow-blue-600/20">
+                                View All
+                            </button>
+                        </div>
+                    </div>
+                    <div id="trending-series-carousel" class="flex gap-4 sm:gap-5 overflow-x-auto pb-4 pt-1 scroll-smooth no-scrollbar select-none"></div>
+                </section>
+            </div>
+
+            <!-- Catalog Section Heading -->
+            <div id="catalog-section" class="pt-2 mb-6 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="compass" id="catalog-icon" class="w-5 h-5 text-red-500"></i>
+                    <h2 id="catalog-heading" class="text-xl sm:text-2xl font-black text-white tracking-tight">
+                        Discover Movies & Series
+                    </h2>
+                </div>
+                <span class="text-xs text-zinc-400 font-medium hidden sm:inline-block">
+                    Showing newest releases first
+                </span>
+            </div>
+
+            <!-- Search and Genre Filters Container -->
+            <div class="bg-zinc-900/80 backdrop-blur-2xl border border-white/10 p-4 sm:p-5 rounded-3xl mb-8 shadow-2xl shadow-black/60 space-y-4">
+                <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500"></i>
+                        <input id="movieSearch" type="text" oninput="handleSearch()" placeholder="Search movies, series, genre, year or synopsis..." class="w-full bg-black/50 border border-white/10 focus:border-red-500/80 rounded-2xl py-3.5 pl-11 pr-10 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:ring-1 focus:ring-red-500 transition-all">
+                        <button id="search-clear-btn" onclick="clearSearch()" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white p-1">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <div class="px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-xs font-semibold text-zinc-300 flex items-center gap-2 shrink-0">
+                            <span class="text-zinc-500">Filter:</span>
+                            <span id="current-filter-label" class="text-red-400 font-bold">Discover</span>
+                            <span id="filter-count-badge" class="text-[10px] bg-red-600/20 text-red-300 px-1.5 py-0.5 rounded-full font-mono">0</span>
+                        </div>
+                        <button onclick="fetchSheetData(true)" title="Refresh data" class="p-3.5 rounded-2xl bg-black/40 hover:bg-zinc-800 text-zinc-300 border border-white/10 transition-all flex items-center justify-center">
+                            <i data-lucide="refresh-cw" id="refresh-icon" class="w-4 h-4 text-zinc-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="genre-filters" class="flex items-center gap-1.5 overflow-x-auto pt-1 pb-1 no-scrollbar text-xs"></div>
+            </div>
+
+            <!-- Movie Grid Container -->
+            <div id="movie-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6"></div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden py-24 text-center max-w-md mx-auto space-y-4">
+                <div class="w-16 h-16 rounded-3xl bg-zinc-900/80 border border-white/10 flex items-center justify-center mx-auto text-zinc-500">
+                    <i data-lucide="film" class="w-8 h-8 opacity-40"></i>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="text-base font-bold text-zinc-200">No titles found</h3>
+                    <p class="text-xs text-zinc-400">Try adjusting your search or genre filter.</p>
+                </div>
+                <button onclick="resetFilters()" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded-xl transition-colors">
+                    Reset Filters
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- FULL MOVIE DETAIL VIEW (Appears when route is #movie/:id) -->
+    <div id="detail-view" class="hidden min-h-screen bg-[#070709] text-white pt-16 pb-20">
+        <!-- Hero Backdrop Banner -->
+        <div class="relative w-full h-[40vh] sm:h-[55vh] lg:h-[65vh] overflow-hidden bg-black">
+            <img id="detail-backdrop" src="" alt="Backdrop" class="w-full h-full object-cover filter brightness-[0.4] contrast-125 scale-105 transition-transform duration-1000 ease-out">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#070709] via-[#070709]/75 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#070709] via-[#070709]/60 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#070709] to-transparent"></div>
+
+            <!-- Top Back Bar & Share (Screenshot 1) -->
+            <div class="absolute top-4 sm:top-6 left-0 right-0 z-30 max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
+                <button onclick="closeDetailView()" class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-black/70 hover:bg-zinc-800 text-zinc-200 hover:text-white backdrop-blur-xl border border-white/10 transition-all group cursor-pointer">
+                    <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+                    <span class="text-xs sm:text-sm font-bold">Back to Catalog</span>
+                </button>
+                <button onclick="shareCurrentMovie()" title="Share Movie Link" class="p-2.5 rounded-2xl bg-black/70 hover:bg-zinc-800 text-zinc-300 hover:text-white backdrop-blur-xl border border-white/10 transition-all cursor-pointer shadow-lg">
+                    <i data-lucide="share-2" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Detail Information Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 -mt-28 sm:-mt-44 lg:-mt-52 relative z-20">
+            <div class="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
+                
+                <!-- Left: Poster Card & Watch CTA -->
+                <div class="w-full sm:w-72 lg:w-80 shrink-0 mx-auto lg:mx-0 space-y-4">
+                    <div class="relative aspect-[2/3] w-full rounded-3xl overflow-hidden shadow-2xl shadow-black/90 border-2 border-white/15 bg-zinc-900">
+                        <img id="detail-poster" src="" alt="Poster" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 flex flex-col gap-1.5 z-10" id="detail-poster-badges"></div>
+                        <div class="absolute top-3 right-3 z-10" id="detail-poster-rating"></div>
+                    </div>
+
+                    <a id="detail-watch-btn" href="#" target="_blank" rel="noopener noreferrer" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-extrabold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-xl shadow-red-600/30 transition-all hover:scale-[1.02] active:scale-95 text-center">
+                        <i data-lucide="send" class="w-5 h-5 fill-white"></i>
+                        <span>Watch on Telegram</span>
+                    </a>
+
+                    <div class="p-3.5 rounded-2xl bg-zinc-900/60 border border-white/10 flex items-center gap-2.5 text-xs text-zinc-400">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                        <span>Verified high-speed Telegram stream link. Safe and ad-free.</span>
+                    </div>
+                </div>
+
+                <!-- Right: Title, Badges, Synopsis, Specs, Related -->
+                <div class="flex-1 space-y-6 text-left w-full">
+                    <div id="detail-tags-row" class="flex flex-wrap items-center gap-2"></div>
+
+                    <div>
+                        <h1 id="detail-title" class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight drop-shadow-md">
+                            Movie Title
+                        </h1>
+                        <p id="detail-orig-title" class="hidden text-sm sm:text-base text-zinc-400 mt-1 font-medium italic"></p>
+                    </div>
+
+                    <!-- Real metadata badges row -->
+                    <div id="detail-meta-row" class="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-zinc-300 font-medium pb-2 border-b border-white/10"></div>
+
+                    <!-- Burmese Synopsis (Screenshot 2) -->
+                    <div class="space-y-3">
+                        <h3 class="text-xs font-black uppercase tracking-widest text-red-400 flex items-center gap-2">
+                            <i data-lucide="film" class="w-4 h-4"></i>
+                            <span>SYNOPSIS / ဇာတ်လမ်းအကျဉ်း</span>
+                        </h3>
+                        <div id="detail-synopsis" class="p-5 sm:p-6 rounded-3xl bg-zinc-900/80 border border-white/10 text-zinc-200 text-sm sm:text-base leading-relaxed whitespace-pre-line select-text font-sans shadow-inner"></div>
+                    </div>
+
+                    <!-- Quick Specs Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-black/40 border border-white/5 text-xs">
+                        <div>
+                            <span class="text-zinc-500 block text-[10px] uppercase font-bold tracking-wider">CATEGORY</span>
+                            <span id="detail-spec-category" class="font-semibold text-zinc-200 capitalize truncate block mt-0.5">Trending</span>
+                        </div>
+                        <div>
+                            <span class="text-zinc-500 block text-[10px] uppercase font-bold tracking-wider">CONTENT TYPE</span>
+                            <span id="detail-spec-type" class="font-semibold text-zinc-200 capitalize truncate block mt-0.5">Movie</span>
+                        </div>
+                        <div>
+                            <span class="text-zinc-500 block text-[10px] uppercase font-bold tracking-wider">AUDIO / SUBTITLE</span>
+                            <span id="detail-spec-lang" class="font-semibold text-zinc-200 truncate block mt-0.5">Myanmar Subtitle</span>
+                        </div>
+                    </div>
+
+                    <!-- Related Movies Grid (Screenshot 3) -->
+                    <div id="detail-related-section" class="pt-6 space-y-4">
+                        <h3 class="text-lg sm:text-xl font-black text-white tracking-tight">More Like This / အလားတူ ဇာတ်ကားများ</h3>
+                        <div id="detail-related-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Sheet Settings Modal -->
+    <div id="settings-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="bg-zinc-900 border border-white/15 rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 text-left">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="sliders-horizontal" class="w-5 h-5 text-red-500"></i>
+                    <h3 class="text-lg font-bold text-white">Google Sheet Configuration</h3>
+                </div>
+                <button onclick="closeSettingsModal()" class="p-1.5 text-zinc-400 hover:text-white rounded-xl bg-black/40 border border-white/5">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <p class="text-xs text-zinc-400 leading-relaxed">
+                Connect your own Google Sheet to update movies and series in real time without touching code. The sheet must be publicly shared (<span class="text-zinc-200 font-semibold">Anyone with link can view</span>).
+            </p>
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-zinc-300 block">Google Sheet or CSV Publish URL</label>
+                <input 
+                    type="text" 
+                    id="custom-sheet-input" 
+                    placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv" 
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/10 text-white text-xs placeholder-zinc-500 focus:outline-none focus:border-red-500"
+                >
+            </div>
+            <div class="flex items-center justify-between pt-2">
+                <button onclick="resetDefaultSheet()" class="text-xs text-zinc-400 hover:text-zinc-200 font-semibold underline">
+                    Reset Default URL
+                </button>
+                <div class="flex gap-2">
+                    <button onclick="closeSettingsModal()" class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold transition">
+                        Cancel
+                    </button>
+                    <button onclick="saveCustomSheet()" class="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-lg shadow-red-600/30 transition">
+                        Save & Reload
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Toast Notification -->
+    <div id="toast-msg" class="fixed bottom-6 right-6 z-50 hidden px-4 py-3 rounded-2xl bg-zinc-900/95 border border-white/15 text-white text-xs font-bold shadow-2xl flex items-center gap-2.5 backdrop-blur-xl">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+        <span id="toast-text">Success</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8 px-6 text-center text-xs text-zinc-500 space-y-3">
+        <p class="font-semibold text-zinc-400">Family Version • HD Cinema & Series Entertainment</p>
+        <p class="text-[11px] text-zinc-600">Discover, Movies, Series, Trending, and Collections Cinema Platform</p>
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2 text-[11px] text-zinc-500">
+            <div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-900 border border-white/5 font-mono text-[10px] text-emerald-400 font-bold">
+                <span>TMDB</span>
+            </div>
+            <span>This product uses the TMDB API but is not endorsed or certified by TMDB.</span>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT: Complete Architecture with Stale-While-Revalidate, Routing, and Header-Based Parsing -->
+    <script>
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRVSH71Wsy2hyuWwPjsOvDsxZTtdU5x9qGKcDmICqaK4TyjgxJIA6c9bf9-WGhlkifD9xm3E9lYEz9q/pub?output=csv';
+        const CUSTOM_SHEET_KEY = 'movieflix_custom_sheet_url';
+        const CACHE_KEY = 'movieflix_catalog_cache_v2';
+
+        let allMovies = [];
+        let featuredMovie = null;
+        let activeTab = 'All';
+        let activeGenre = 'All';
+        let currentDetailMovieId = null;
+
+        // Escape HTML for XSS prevention
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function sanitizeUrl(url) {
+            if (!url) return '';
+            const trimmed = String(url).trim();
+            if (/^https?:\/\//i.test(trimmed)) return trimmed;
+            return '';
+        }
+
+        function slugify(title, year) {
+            const cleanTitle = String(title || 'movie')
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            const cleanYear = String(year || '').trim().replace(/[^\d]/g, '');
+            return cleanYear ? `${cleanTitle}-${cleanYear}` : cleanTitle;
+        }
+
+        // RFC 4180 CSV parser with multi-line cell handling
+        function parseCSV(csvText) {
+            const rows = [];
+            let currentRow = [];
+            let currentField = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < csvText.length; i++) {
+                const char = csvText[i];
+                const nextChar = csvText[i + 1];
+
+                if (inQuotes) {
+                    if (char === '"') {
+                        if (nextChar === '"') {
+                            currentField += '"';
+                            i++;
+                        } else {
+                            inQuotes = false;
+                        }
+                    } else {
+                        currentField += char;
+                    }
+                } else {
+                    if (char === '"') {
+                        inQuotes = true;
+                    } else if (char === ',') {
+                        currentRow.push(currentField.trim());
+                        currentField = '';
+                    } else if (char === '\r') {
+                        if (nextChar === '\n') i++;
+                        currentRow.push(currentField.trim());
+                        if (currentRow.some(c => c.length > 0)) rows.push(currentRow);
+                        currentRow = [];
+                        currentField = '';
+                    } else if (char === '\n') {
+                        currentRow.push(currentField.trim());
+                        if (currentRow.some(c => c.length > 0)) rows.push(currentRow);
+                        currentRow = [];
+                        currentField = '';
+                    } else {
+                        currentField += char;
+                    }
+                }
+            }
+
+            if (currentField || currentRow.length > 0) {
+                currentRow.push(currentField.trim());
+                if (currentRow.some(c => c.length > 0)) rows.push(currentRow);
+            }
+
+            if (rows.length <= 1) return [];
+
+            // Header-based mapping
+            const rawHeaders = rows[0];
+            const headers = rawHeaders.map(h => h.toLowerCase().trim().replace(/[^a-z0-9]/g, ''));
+            const findCol = (keys) => headers.findIndex(h => keys.some(k => h === k || h.includes(k)));
+
+            const idIdx = findCol(['id', 'movieid', 'slug']);
+            const titleIdx = findCol(['title', 'movietitle', 'name']);
+            const origTitleIdx = findCol(['originaltitle', 'orgtitle']);
+            const yearIdx = findCol(['year', 'releaseyear', 'date']);
+            const genreIdx = findCol(['genre', 'genres']);
+            const posterIdx = findCol(['poster', 'posterurl', 'image', 'img', 'thumbnail']);
+            const backdropIdx = findCol(['backdrop', 'backdropurl', 'banner', 'cover', 'heroimage']);
+            const tgLinkIdx = findCol(['tglink', 'telegram', 'telegramurl', 'link', 'url', 'watchlink']);
+            const categoryIdx = findCol(['category', 'cat']);
+            const typeIdx = findCol(['type', 'contenttype', 'format']);
+            const pinIdx = findCol(['pin', 'pinned', 'spotlight', 'featured']);
+            const trendingIdx = findCol(['trending', 'trend', 'istrending']);
+            const synopsisIdx = findCol(['synopsis', 'desc', 'description', 'detail', 'story']);
+            const ratingIdx = findCol(['rating', 'imdb', 'score']);
+            const qualityIdx = findCol(['quality', 'resolution']);
+            const languageIdx = findCol(['language', 'audio', 'sub', 'subtitle']);
+            const durationIdx = findCol(['duration', 'runtime', 'length']);
+            const ageRatingIdx = findCol(['agerating', 'age', 'rated']);
+            const statusIdx = findCol(['status', 'state']);
+
+            const clean = (row, idx) => {
+                if (idx < 0 || idx >= row.length) return '';
+                const v = row[idx];
+                return v ? v.replace(/^"|"$/g, '').trim() : '';
+            };
+
+            const movies = [];
+            const seenIds = new Set();
+
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const rawTitle = clean(row, titleIdx !== -1 ? titleIdx : 0);
+                const rawPoster = clean(row, posterIdx !== -1 ? posterIdx : 3);
+                if (!rawTitle && !rawPoster) continue;
+
+                const rawId = clean(row, idIdx);
+                const rawYear = clean(row, yearIdx !== -1 ? yearIdx : 1) || '2026';
+                const originalTitle = clean(row, origTitleIdx);
+                const genre = clean(row, genreIdx !== -1 ? genreIdx : 2) || '';
+                const backdrop = sanitizeUrl(clean(row, backdropIdx));
+                const poster = sanitizeUrl(rawPoster) || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400';
+                const tgLink = sanitizeUrl(clean(row, tgLinkIdx !== -1 ? tgLinkIdx : 4)) || 'https://t.me/addlist/58gZNGQ86uJiOWE9';
+                const category = clean(row, categoryIdx !== -1 ? categoryIdx : 5) || 'Discover';
+                const rawType = clean(row, typeIdx !== -1 ? typeIdx : 6);
+                const pin = clean(row, pinIdx !== -1 ? pinIdx : 7);
+                const trendingVal = clean(row, trendingIdx);
+                const synopsis = clean(row, synopsisIdx !== -1 ? synopsisIdx : 8) || '';
+                const rating = clean(row, ratingIdx); // Real value only!
+                const quality = clean(row, qualityIdx);
+                const language = clean(row, languageIdx);
+                const duration = clean(row, durationIdx);
+                const ageRating = clean(row, ageRatingIdx);
+                const status = clean(row, statusIdx);
+
+                if (status && (status.toLowerCase() === 'inactive' || status.toLowerCase() === 'hidden')) {
+                    continue;
+                }
+
+                const isSeries = rawType.toLowerCase().includes('series') || category.toLowerCase().includes('series') || genre.toLowerCase().includes('series');
+                const finalType = isSeries ? 'series' : 'movie';
+
+                let stableId = rawId ? slugify(rawId) : slugify(rawTitle, rawYear);
+                if (!stableId) stableId = `item-${i}`;
+                if (seenIds.has(stableId)) {
+                    let c = 2;
+                    while (seenIds.has(`${stableId}-${c}`)) c++;
+                    stableId = `${stableId}-${c}`;
+                }
+                seenIds.add(stableId);
+
+                movies.push({
+                    id: stableId,
+                    title: rawTitle,
+                    originalTitle: originalTitle || undefined,
+                    year: rawYear,
+                    genre,
+                    poster,
+                    backdrop: backdrop || undefined,
+                    tgLink,
+                    category,
+                    type: finalType,
+                    pin: pin || undefined,
+                    trending: trendingVal || undefined,
+                    synopsis,
+                    rating: rating || undefined,
+                    quality: quality || undefined,
+                    language: language || undefined,
+                    duration: duration || undefined,
+                    ageRating: ageRating || undefined,
+                    status: status || 'active',
+                });
+            }
+
+            return movies.reverse();
+        }
+
+        // Fetch data with resilient fallback strategy
+        async function fetchSheetData(forceRefresh = false) {
+            const refreshIcon = document.getElementById('refresh-icon');
+            if (refreshIcon) refreshIcon.classList.add('animate-spin');
+
+            const tryFetch = async (url) => {
+                try {
+                    const res = await fetch(url);
+                    if (!res.ok) return null;
+                    const text = await res.text();
+                    if (text.includes('<!DOCTYPE html>') || text.includes('<html')) return null;
+                    const parsed = parseCSV(text);
+                    return parsed.length > 0 ? parsed : null;
+                } catch (e) {
+                    return null;
+                }
+            };
+
+            try {
+                const activeSheetUrl = localStorage.getItem(CUSTOM_SHEET_KEY) || SHEET_CSV_URL;
+                let freshMovies = await tryFetch(activeSheetUrl);
+                if (!freshMovies && activeSheetUrl !== SHEET_CSV_URL) {
+                    freshMovies = await tryFetch(SHEET_CSV_URL);
+                }
+                if (!freshMovies) {
+                    freshMovies = await tryFetch('/fallback_catalog.csv');
+                }
+
+                if (freshMovies && freshMovies.length > 0) {
+                    allMovies = freshMovies;
+                    try { localStorage.setItem(CACHE_KEY, JSON.stringify(freshMovies)); } catch(e){}
+                    initializeData();
+                }
+            } catch (err) {
+                console.warn('Network fetch error, falling back to cache:', err);
+                if (allMovies.length === 0) {
+                    const skeleton = document.getElementById('loading-skeleton');
+                    if (skeleton) skeleton.innerHTML = '<div class="p-6 rounded-2xl bg-red-950/40 border border-red-500/30 text-center"><p class="text-sm text-red-300">Google Sheet မှ ဒေတာရယူ၍မရပါ သို့မဟုတ် ကွန်ရက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်။</p></div>';
+                }
+            } finally {
+                if (refreshIcon) refreshIcon.classList.remove('animate-spin');
+                const skeleton = document.getElementById('loading-skeleton');
+                if (skeleton) skeleton.classList.add('hidden');
+            }
+        }
+
+        function initializeData() {
+            // Pick spotlight featured premiere
+            featuredMovie = allMovies.find(m => m.pin === '1' || m.pin === 'true') ||
+                            allMovies.find(m => m.trending === '1' || (m.category && m.category.toLowerCase().includes('trend'))) ||
+                            allMovies[0];
+
+            updateHero();
+            updateTabBadges();
+            buildGenreFilters();
+            renderTrendingRows();
+            handleRouting();
+        }
+
+        function updateHero() {
+            if (!featuredMovie) return;
+            document.getElementById('hero-title').innerText = featuredMovie.title;
+            document.getElementById('hero-year').innerText = featuredMovie.year || '2026';
+            document.getElementById('hero-genre').innerText = featuredMovie.genre || 'Action';
+            const bgImg = featuredMovie.backdrop || featuredMovie.poster;
+            document.getElementById('hero-backdrop').src = bgImg;
+            document.getElementById('hero-poster-img').src = featuredMovie.poster;
+            document.getElementById('hero-category-tag').innerText = '#' + (featuredMovie.category || 'FEATURED').toUpperCase();
+
+            // Real rating
+            const ratingBadge = document.getElementById('hero-rating-badge');
+            const ratingText = document.getElementById('hero-rating-text');
+            if (featuredMovie.rating) {
+                ratingBadge.classList.remove('hidden');
+                ratingText.innerText = featuredMovie.rating + ' Rating';
+            } else {
+                ratingBadge.classList.add('hidden');
+            }
+
+            if (featuredMovie.synopsis) {
+                document.getElementById('hero-synopsis').innerText = featuredMovie.synopsis.split('\n')[0];
+            }
+            const link = featuredMovie.tgLink || 'https://t.me/addlist/58gZNGQ86uJiOWE9';
+            document.getElementById('hero-watch-btn').href = link;
+            document.getElementById('hero-tg-link').href = link;
+            document.getElementById('hero-format-tag').innerText = featuredMovie.type === 'series' ? '• SERIES' : '• MOVIE';
+        }
+
+        function openHeroMoreInfo() {
+            if (featuredMovie) openMovie(featuredMovie.id);
+        }
+
+        function scrollRow(carouselId, amount) {
+            const el = document.getElementById(carouselId);
+            if (el) el.scrollBy({ left: amount, behavior: 'smooth' });
+        }
+
+        // Render Trending Preview Carousels
+        function renderTrendingRows() {
+            const moviesRow = document.getElementById('trending-movies-carousel');
+            const seriesRow = document.getElementById('trending-series-carousel');
+
+            const trendingMovies = allMovies.filter(m => {
+                const isSeries = m.type === 'series' || (m.category || '').toLowerCase().includes('series');
+                const isTrending = m.trending === '1' || (m.category || '').toLowerCase().includes('trend') || (m.genre || '').toLowerCase().includes('trend');
+                return !isSeries && isTrending;
+            });
+            const displayMovies = trendingMovies.length > 0 ? trendingMovies : allMovies.filter(m => m.type !== 'series');
+            const seriesList = allMovies.filter(m => m.type === 'series' || (m.category || '').toLowerCase().includes('series') || (m.genre || '').toLowerCase().includes('series'));
+
+            const renderCard = (m) => {
+                const isSeries = m.type === 'series';
+                const badge = isSeries 
+                    ? '<span class="bg-purple-600 text-white font-black text-[10px] px-1.5 py-0.5 rounded shadow-md uppercase tracking-wider">SERIES</span>'
+                    : `<span class="bg-red-600 text-white font-black text-[10px] px-1.5 py-0.5 rounded shadow-md uppercase tracking-wider">${escapeHtml(m.quality || '4K')}</span>`;
+
+                const ratingMarkup = m.rating 
+                    ? `<div class="absolute top-2 right-2 z-10">
+                         <div class="flex items-center gap-1 bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/10 text-[11px] font-black text-amber-400 shadow-md">
+                           <i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>
+                           <span>${escapeHtml(m.rating)}</span>
+                         </div>
+                       </div>`
+                    : '';
+
+                return `
+                <div onclick="openMovie('${escapeHtml(m.id)}')" class="group shrink-0 w-44 sm:w-52 cursor-pointer text-left select-none transition-all duration-300 hover:-translate-y-1.5">
+                    <div class="bg-[#121217] border border-white/10 group-hover:border-red-500/50 rounded-2xl overflow-hidden shadow-lg transition-all">
+                        <div class="relative aspect-[2/3] w-full overflow-hidden bg-zinc-900">
+                            <img src="${escapeHtml(m.poster)}" alt="${escapeHtml(m.title)}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400'">
+                            <div class="absolute top-2 left-2 z-10">${badge}</div>
+                            ${ratingMarkup}
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                <div class="w-10 h-10 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg shadow-red-600/40 transform scale-75 group-hover:scale-100 transition-transform">
+                                    <i data-lucide="play" class="w-4 h-4 fill-white ml-0.5"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2.5 px-0.5 text-left">
+                        <h3 class="text-xs sm:text-sm font-bold text-white truncate group-hover:text-red-400 transition-colors">${escapeHtml(m.title)}</h3>
+                        <p class="text-[11px] text-zinc-400 capitalize mt-0.5 truncate">${escapeHtml(m.genre || 'Cinema')} • ${escapeHtml(m.year || '2026')}</p>
+                    </div>
+                </div>
+                `;
+            };
+
+            if (moviesRow) moviesRow.innerHTML = displayMovies.map(m => renderCard(m)).join('');
+            if (seriesRow) seriesRow.innerHTML = seriesList.map(m => renderCard(m)).join('');
+            lucide.createIcons();
+        }
+
+        function buildGenreFilters() {
+            const genresSet = new Set();
+            allMovies.forEach(m => {
+                if (m.genre) {
+                    m.genre.split(/[/,]/).forEach(g => {
+                        const clean = g.trim();
+                        if (clean) genresSet.add(clean);
+                    });
+                }
+            });
+
+            const container = document.getElementById('genre-filters');
+            let html = `<span class="text-zinc-500 shrink-0 mr-1 text-[11px] font-bold uppercase tracking-wider">Genres:</span>`;
+            html += `<button onclick="switchGenre('All', this)" class="genre-pill bg-white text-black px-3.5 py-1 rounded-xl text-xs font-bold shrink-0 transition">All</button>`;
+            genresSet.forEach(g => {
+                html += `<button onclick="switchGenre('${escapeHtml(g)}', this)" class="genre-pill bg-black/40 text-zinc-400 hover:text-white border border-white/5 px-3.5 py-1 rounded-xl text-xs font-semibold capitalize shrink-0 transition">${escapeHtml(g)}</button>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function switchGenre(genre, el) {
+            activeGenre = genre;
+            document.querySelectorAll('.genre-pill').forEach(btn => {
+                btn.className = 'genre-pill bg-black/40 text-zinc-400 hover:text-white border border-white/5 px-3.5 py-1 rounded-xl text-xs font-semibold capitalize shrink-0 transition';
+            });
+            if (el) {
+                el.className = 'genre-pill bg-red-600 text-white px-3.5 py-1 rounded-xl text-xs font-bold shrink-0 transition shadow-md shadow-red-600/30';
+            }
+            renderFilteredCatalog();
+        }
+
+        // Tab Navigation and URL Hash Synchronization
+        function navigateToTab(tab) {
+            activeTab = tab;
+            currentDetailMovieId = null;
+
+            // Close detail view if open and show catalog
+            const catalogView = document.getElementById('catalog-view');
+            const detailView = document.getElementById('detail-view');
+            if (catalogView) catalogView.classList.remove('hidden');
+            if (detailView) detailView.classList.add('hidden');
+
+            if (tab === 'All') {
+                window.location.hash = '#home';
+            } else {
+                window.location.hash = '#' + tab.toLowerCase();
+            }
+            applyTabState(tab);
+
+            // Scroll to proper viewing position
+            setTimeout(() => {
+                if (tab === 'All') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    const catSection = document.getElementById('catalog-section');
+                    if (catSection) {
+                        catSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }
+            }, 60);
+        }
+
+        function applyTabState(tab) {
+            activeTab = tab;
+            
+            // 1. Update desktop tab buttons
+            document.querySelectorAll('.nav-tab').forEach(t => {
+                t.classList.remove('active-tab');
+                t.classList.add('text-zinc-400');
+            });
+            const tabId = 'nav-tab-' + tab.toLowerCase();
+            const activeEl = document.getElementById(tabId);
+            if (activeEl) {
+                activeEl.classList.add('active-tab');
+                activeEl.classList.remove('text-zinc-400');
+            }
+
+            // 2. Update mobile drawer buttons
+            document.querySelectorAll('.mobile-nav-tab').forEach(btn => {
+                btn.className = 'mobile-nav-tab p-3 rounded-xl text-xs font-bold bg-zinc-900 text-zinc-300 border border-white/5 flex items-center justify-between';
+            });
+            const mActiveEl = document.getElementById('m-nav-tab-' + tab.toLowerCase());
+            if (mActiveEl) {
+                mActiveEl.className = 'mobile-nav-tab p-3 rounded-xl text-xs font-bold bg-red-600 text-white shadow-md flex items-center justify-between';
+            }
+
+            // 3. Update mobile horizontal sticky pill tabs
+            document.querySelectorAll('.mobile-pill-tab').forEach(btn => {
+                btn.className = 'mobile-pill-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-zinc-900 text-zinc-400 hover:text-white';
+            });
+            const mPillEl = document.getElementById('m-pill-' + tab.toLowerCase());
+            if (mPillEl) {
+                mPillEl.className = 'mobile-pill-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-red-600 text-white shadow-md';
+            }
+
+            // Hero section and trending preview rows ONLY show on Home ('All' tab)
+            const heroSection = document.getElementById('hero-section');
+            const homeTrendingPreview = document.getElementById('home-trending-preview-container');
+
+            if (tab === 'All') {
+                if (heroSection) heroSection.classList.remove('hidden');
+                if (homeTrendingPreview) homeTrendingPreview.classList.remove('hidden');
+            } else {
+                if (heroSection) heroSection.classList.add('hidden');
+                if (homeTrendingPreview) homeTrendingPreview.classList.add('hidden');
+            }
+
+            // Update headings & icon
+            const filterLabel = document.getElementById('current-filter-label');
+            if (filterLabel) filterLabel.innerText = tab === 'All' ? 'Discover' : tab;
+
+            const catalogHeading = document.getElementById('catalog-heading');
+            const catalogIcon = document.getElementById('catalog-icon');
+            if (catalogHeading) {
+                if (tab === 'All') {
+                    catalogHeading.innerText = 'Discover Movies & Series';
+                    if (catalogIcon) catalogIcon.innerHTML = '<i data-lucide="compass" class="w-5 h-5 text-red-500"></i>';
+                } else if (tab === 'Movies') {
+                    catalogHeading.innerText = 'Movies Catalog';
+                    if (catalogIcon) catalogIcon.innerHTML = '<i data-lucide="film" class="w-5 h-5 text-red-500"></i>';
+                } else if (tab === 'Series') {
+                    catalogHeading.innerText = 'Series & Dramas Catalog';
+                    if (catalogIcon) catalogIcon.innerHTML = '<i data-lucide="tv" class="w-5 h-5 text-purple-400"></i>';
+                } else if (tab === 'Trending') {
+                    catalogHeading.innerText = 'Trending Titles (Top Rated & Viewed)';
+                    if (catalogIcon) catalogIcon.innerHTML = '<i data-lucide="sparkles" class="w-5 h-5 text-amber-400"></i>';
+                } else if (tab === 'Collections') {
+                    catalogHeading.innerText = 'Curated Collections & Bundles';
+                    if (catalogIcon) catalogIcon.innerHTML = '<i data-lucide="folder-archive" class="w-5 h-5 text-emerald-400"></i>';
+                }
+            }
+
+            renderFilteredCatalog();
+            lucide.createIcons();
+        }
+
+        function updateTabBadges() {
+            let moviesCount = 0, seriesCount = 0, trendingCount = 0, collectionsCount = 0;
+            allMovies.forEach(m => {
+                const cat = (m.category || '').toLowerCase();
+                const gen = (m.genre || '').toLowerCase();
+                const isSeries = m.type === 'series' || cat.includes('series') || gen.includes('series');
+                const isTrending = m.trending === '1' || (m.trending || '').toLowerCase() === 'true' || cat.includes('trend') || gen.includes('trend');
+                const isCollection = cat.includes('collection') || gen.includes('collection');
+
+                if (isSeries) seriesCount++;
+                else moviesCount++;
+
+                if (isTrending) trendingCount++;
+                if (isCollection) collectionsCount++;
+            });
+
+            const effectiveTrending = trendingCount > 0 ? trendingCount : Math.min(moviesCount, 12);
+
+            const setBadge = (id, count) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = count;
+            };
+            setBadge('badge-all', allMovies.length);
+            setBadge('badge-movies', moviesCount);
+            setBadge('badge-series', seriesCount);
+            setBadge('badge-trending', effectiveTrending);
+            setBadge('badge-collections', collectionsCount);
+
+            setBadge('m-badge-all', allMovies.length);
+            setBadge('m-badge-movies', moviesCount);
+            setBadge('m-badge-series', seriesCount);
+            setBadge('m-badge-trending', effectiveTrending);
+            setBadge('m-badge-collections', collectionsCount);
+        }
+
+        // Render main catalog grid based on activeTab, activeGenre, and search query
+        function renderFilteredCatalog() {
+            const searchInput = document.getElementById('movieSearch');
+            const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+            let filtered = allMovies;
+
+            if (activeTab === 'Movies') {
+                filtered = filtered.filter(m => m.type !== 'series' && !(m.category || '').toLowerCase().includes('series') && !(m.genre || '').toLowerCase().includes('series'));
+            } else if (activeTab === 'Series') {
+                filtered = filtered.filter(m => m.type === 'series' || (m.category || '').toLowerCase().includes('series') || (m.genre || '').toLowerCase().includes('series'));
+            } else if (activeTab === 'Trending') {
+                const trendingMatches = filtered.filter(m => 
+                    m.trending === '1' || 
+                    (m.trending || '').toLowerCase() === 'true' || 
+                    (m.category || '').toLowerCase().includes('trend') || 
+                    (m.genre || '').toLowerCase().includes('trend')
+                );
+                filtered = trendingMatches.length > 0 ? trendingMatches : filtered.filter(m => m.type !== 'series').slice(0, 24);
+            } else if (activeTab === 'Collections') {
+                filtered = filtered.filter(m => (m.category || '').toLowerCase().includes('collection') || (m.genre || '').toLowerCase().includes('collection'));
+            }
+
+            if (activeGenre !== 'All') {
+                filtered = filtered.filter(m => (m.genre || '').toLowerCase().includes(activeGenre.toLowerCase()));
+            }
+
+            if (query) {
+                filtered = filtered.filter(m => 
+                    (m.title || '').toLowerCase().includes(query) ||
+                    (m.originalTitle || '').toLowerCase().includes(query) ||
+                    (m.genre || '').toLowerCase().includes(query) ||
+                    (m.year || '').toLowerCase().includes(query) ||
+                    (m.synopsis || '').toLowerCase().includes(query)
+                );
+            }
+
+            const countBadge = document.getElementById('filter-count-badge');
+            if (countBadge) countBadge.innerText = filtered.length;
+
+            const grid = document.getElementById('movie-grid');
+            const emptyState = document.getElementById('empty-state');
+
+            if (filtered.length === 0) {
+                if (grid) grid.innerHTML = '';
+                if (emptyState) emptyState.classList.remove('hidden');
+                return;
+            }
+
+            if (emptyState) emptyState.classList.add('hidden');
+
+            const getCategoryBadge = (cat) => {
+                if (!cat) return '';
+                const c = cat.toLowerCase();
+                if (c.includes('trend')) return '<span class="inline-flex items-center gap-1 bg-amber-500/25 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md">Trending</span>';
+                if (c.includes('series')) return '<span class="inline-flex items-center gap-1 bg-purple-500/25 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md">Series</span>';
+                if (c.includes('collection')) return '<span class="inline-flex items-center gap-1 bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md">Collection</span>';
+                return `<span class="inline-flex items-center gap-1 bg-red-600/25 text-red-300 border border-red-500/40 px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md">${escapeHtml(cat)}</span>`;
+            };
+
+            const html = filtered.map(m => {
+                const ratingBadge = m.rating 
+                    ? `<span class="bg-black/80 backdrop-blur-md text-amber-300 px-1.5 py-0.5 rounded-md text-[10px] font-black border border-amber-500/30 flex items-center gap-0.5">
+                         <i data-lucide="star" class="w-2.5 h-2.5 fill-amber-400 text-amber-400"></i>
+                         ${escapeHtml(m.rating)}
+                       </span>`
+                    : '';
+
+                const yearBadge = m.year 
+                    ? `<span class="bg-black/70 backdrop-blur-md text-zinc-200 px-2 py-0.5 rounded-md text-[10px] font-bold border border-white/10">${escapeHtml(m.year)}</span>`
+                    : '';
+
+                return `
+                <div onclick="openMovie('${escapeHtml(m.id)}')" class="group cursor-pointer text-left flex flex-col h-full select-none">
+                    <div class="relative aspect-[2/3] rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 transition-all duration-300 group-hover:scale-[1.04] group-hover:border-red-500/50 group-hover:shadow-2xl group-hover:shadow-red-600/20">
+                        <img src="${escapeHtml(m.poster)}" alt="${escapeHtml(m.title)}" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400'">
+                        <div class="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none z-10">
+                            <div>${getCategoryBadge(m.category)}</div>
+                            <div class="flex items-center gap-1">${ratingBadge}${yearBadge}</div>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                            <div class="w-12 h-12 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-xl shadow-red-600/40 transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                                <i data-lucide="play" class="w-5 h-5 fill-white ml-0.5"></i>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 z-20">
+                            <p class="text-[11px] text-zinc-300 line-clamp-2 mb-2.5 font-medium leading-snug">${escapeHtml(m.genre || m.title)}</p>
+                            <a href="${escapeHtml(m.tgLink || 'https://t.me/addlist/58gZNGQ86uJiOWE9')}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white py-2 px-3 rounded-xl text-center text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-lg shadow-red-600/30">
+                                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                                Watch on Telegram
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-2.5 flex-1 flex flex-col">
+                        <h3 class="font-bold text-sm text-zinc-100 line-clamp-1 group-hover:text-red-400 transition-colors">${escapeHtml(m.title)}</h3>
+                        <div class="flex items-center gap-2 mt-1 text-[11px] text-zinc-400 font-medium capitalize">
+                            <span class="text-zinc-300 truncate">${escapeHtml(m.genre || 'Action')}</span>
+                            ${m.year ? `<span class="text-zinc-600">•</span><span class="text-zinc-400 shrink-0">${escapeHtml(m.year)}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            if (grid) grid.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        // FULL MOVIE DETAIL VIEW LOGIC
+        function openMovie(movieId) {
+            const movie = allMovies.find(m => m.id === movieId);
+            if (!movie) return;
+
+            currentDetailMovieId = movieId;
+            window.location.hash = '#movie/' + encodeURIComponent(movieId);
+            renderDetailView(movie);
+        }
+
+        function renderDetailView(movie) {
+            const catalogView = document.getElementById('catalog-view');
+            const detailView = document.getElementById('detail-view');
+            if (catalogView) catalogView.classList.add('hidden');
+            if (detailView) detailView.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            document.getElementById('detail-backdrop').src = movie.backdrop || movie.poster;
+            document.getElementById('detail-poster').src = movie.poster;
+            document.getElementById('detail-title').innerText = movie.title;
+
+            const origTitle = document.getElementById('detail-orig-title');
+            if (movie.originalTitle) {
+                origTitle.innerText = 'Original title: ' + movie.originalTitle;
+                origTitle.classList.remove('hidden');
+            } else {
+                origTitle.classList.add('hidden');
+            }
+
+            // Poster badges
+            const posterBadges = document.getElementById('detail-poster-badges');
+            posterBadges.innerHTML = `
+                <span class="${movie.type === 'series' ? 'bg-purple-600' : 'bg-red-600'} text-white font-black text-[10px] px-2 py-0.5 rounded-md shadow-md uppercase tracking-wider">
+                    ${movie.type === 'series' ? 'SERIES' : 'MOVIE'}
+                </span>
+                ${movie.quality ? `<span class="bg-black/80 backdrop-blur-md text-zinc-200 border border-white/20 font-bold text-[10px] px-2 py-0.5 rounded-md uppercase">${escapeHtml(movie.quality)}</span>` : ''}
+            `;
+
+            // Rating
+            const ratingContainer = document.getElementById('detail-poster-rating');
+            if (movie.rating) {
+                ratingContainer.innerHTML = `
+                    <div class="flex items-center gap-1 bg-black/85 backdrop-blur-md px-2.5 py-1 rounded-lg border border-amber-500/30 text-xs font-black text-amber-300 shadow-xl">
+                        <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                        <span>${escapeHtml(movie.rating)}</span>
+                    </div>
+                `;
+            } else {
+                ratingContainer.innerHTML = '';
+            }
+
+            // Watch button link
+            const watchBtn = document.getElementById('detail-watch-btn');
+            watchBtn.href = movie.tgLink || 'https://t.me/addlist/58gZNGQ86uJiOWE9';
+
+            // Detail Tags Row
+            const tagsRow = document.getElementById('detail-tags-row');
+            tagsRow.innerHTML = `
+                ${movie.category ? `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-red-600/20 text-red-400 border border-red-500/30">${escapeHtml(movie.category)}</span>` : ''}
+                ${movie.pin === '1' ? `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30">★ Featured Premiere</span>` : ''}
+                ${movie.trending === '1' ? `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/30">🔥 Trending</span>` : ''}
+            `;
+
+            // Real Metadata Badges Row (NO FAKE LABELS)
+            const metaRow = document.getElementById('detail-meta-row');
+            let metaHtml = '';
+            if (movie.year) metaHtml += `<span class="bg-white/10 px-2.5 py-1 rounded-lg">${escapeHtml(movie.year)}</span>`;
+            if (movie.type) metaHtml += `<span class="bg-white/10 px-2.5 py-1 rounded-lg capitalize">${escapeHtml(movie.type)}</span>`;
+            if (movie.genre) metaHtml += `<span class="text-zinc-200 capitalize">${escapeHtml(movie.genre)}</span>`;
+            if (movie.duration) metaHtml += `<span class="bg-white/5 px-2.5 py-1 rounded-lg">${escapeHtml(movie.duration)}</span>`;
+            if (movie.language) metaHtml += `<span class="bg-white/5 px-2.5 py-1 rounded-lg">${escapeHtml(movie.language)}</span>`;
+            if (movie.ageRating) metaHtml += `<span class="border border-white/20 px-2 py-0.5 rounded text-xs font-bold">${escapeHtml(movie.ageRating)}</span>`;
+            if (movie.rating) {
+                metaHtml += `<span class="flex items-center gap-1 bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg font-bold border border-amber-500/30"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>${escapeHtml(movie.rating)} Rating</span>`;
+            } else {
+                metaHtml += `<span class="text-zinc-500 text-xs">Rating unavailable</span>`;
+            }
+            metaRow.innerHTML = metaHtml;
+
+            // Burmese Synopsis (Screenshot 2)
+            const synopsisEl = document.getElementById('detail-synopsis');
+            if (movie.synopsis && movie.synopsis.trim()) {
+                synopsisEl.innerText = movie.synopsis;
+            } else {
+                synopsisEl.innerHTML = `<span class="text-zinc-400 italic">${escapeHtml(movie.title)} အတွက် အသေးစိတ် ဇာတ်လမ်းအကျဉ်းကို မထည့်သွင်းရသေးပါ။ အထက်ပါ Telegram ခလုတ်မှတစ်ဆင့် တိုက်ရိုက် ကြည့်ရှုနိုင်ပါသည်။</span>`;
+            }
+
+            // Quick Specs Grid (Screenshot 3)
+            const specCategory = document.getElementById('detail-spec-category');
+            if (specCategory) specCategory.innerText = movie.category || (movie.type === 'series' ? 'Series' : 'Cinema Release');
+            const specType = document.getElementById('detail-spec-type');
+            if (specType) specType.innerText = movie.type === 'series' ? 'TV Series' : 'Movie';
+            const specLang = document.getElementById('detail-spec-lang');
+            if (specLang) specLang.innerText = movie.language || 'Myanmar Subtitle';
+
+            // Related Movies (Screenshot 3)
+            const currentGenres = (movie.genre || '').toLowerCase().split(/[/,]/).map(g => g.trim()).filter(Boolean);
+            const related = allMovies.filter(m => m.id !== movie.id && (m.type === movie.type || currentGenres.some(g => (m.genre || '').toLowerCase().includes(g)))).slice(0, 6);
+
+            const relatedGrid = document.getElementById('detail-related-grid');
+            if (related.length > 0) {
+                relatedGrid.innerHTML = related.map(item => `
+                    <div onclick="openMovie('${escapeHtml(item.id)}')" class="group cursor-pointer text-left select-none">
+                        <div class="relative aspect-[2/3] rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 transition-all duration-300 group-hover:scale-105 group-hover:border-red-500/50">
+                            <img src="${escapeHtml(item.poster)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400'">
+                        </div>
+                        <p class="mt-1.5 text-xs font-bold text-zinc-300 truncate group-hover:text-red-400">${escapeHtml(item.title)}</p>
+                        <p class="text-[10px] text-zinc-500">${escapeHtml(item.year || '2026')}</p>
+                    </div>
+                `).join('');
+                document.getElementById('detail-related-section').classList.remove('hidden');
+            } else {
+                document.getElementById('detail-related-section').classList.add('hidden');
+            }
+
+            lucide.createIcons();
+        }
+
+        function closeDetailView() {
+            currentDetailMovieId = null;
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                navigateToTab('All');
+            }
+        }
+
+        // Share Movie Link (Screenshot 1)
+        function shareCurrentMovie() {
+            if (!currentDetailMovieId) return;
+            const movie = allMovies.find(m => m.id === currentDetailMovieId);
+            const title = movie ? movie.title : 'MovieFlix Live';
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: `Watch ${title} on MovieFlix Live!`,
+                    url: url
+                }).catch(() => {});
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(url);
+                showToast('Movie link copied to clipboard!');
+            } else {
+                showToast('Movie URL: ' + url);
+            }
+        }
+
+        // Toast Message System
+        let toastTimer = null;
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            const text = document.getElementById('toast-text');
+            if (!toast || !text) return;
+            text.innerText = msg;
+            toast.classList.remove('hidden');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2800);
+        }
+
+        // Google Sheet Settings Modal Functions
+        function openSettingsModal() {
+            const modal = document.getElementById('settings-modal');
+            const input = document.getElementById('custom-sheet-input');
+            if (modal) modal.classList.remove('hidden');
+            if (input) input.value = localStorage.getItem(CUSTOM_SHEET_KEY) || SHEET_CSV_URL;
+        }
+
+        function closeSettingsModal() {
+            const modal = document.getElementById('settings-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function saveCustomSheet() {
+            const input = document.getElementById('custom-sheet-input');
+            const val = input ? input.value.trim() : '';
+            if (val) {
+                localStorage.setItem(CUSTOM_SHEET_KEY, val);
+                localStorage.removeItem(CACHE_KEY);
+                closeSettingsModal();
+                showToast('Sheet URL updated! Reloading catalog...');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 600);
+            }
+        }
+
+        function resetDefaultSheet() {
+            localStorage.removeItem(CUSTOM_SHEET_KEY);
+            localStorage.removeItem(CACHE_KEY);
+            closeSettingsModal();
+            showToast('Reset to default sheet URL! Reloading...');
+            setTimeout(() => {
+                window.location.reload();
+            }, 600);
+        }
+
+        // URL Hash Routing Listener
+        function handleRouting() {
+            const rawHash = window.location.hash || '';
+            if (rawHash.startsWith('#movie/')) {
+                const id = decodeURIComponent(rawHash.slice(7)).trim();
+                if (id) {
+                    const found = allMovies.find(m => m.id === id);
+                    if (found) {
+                        renderDetailView(found);
+                        return;
+                    }
+                }
+            }
+
+            // Restore catalog view
+            const catalogView = document.getElementById('catalog-view');
+            const detailView = document.getElementById('detail-view');
+            if (catalogView) catalogView.classList.remove('hidden');
+            if (detailView) detailView.classList.add('hidden');
+
+            const cleanHash = rawHash.replace('#', '').toLowerCase();
+            if (cleanHash === 'movies') applyTabState('Movies');
+            else if (cleanHash === 'series') applyTabState('Series');
+            else if (cleanHash === 'trending') applyTabState('Trending');
+            else if (cleanHash === 'collections') applyTabState('Collections');
+            else applyTabState('All');
+        }
+
+        window.addEventListener('hashchange', handleRouting);
+        window.addEventListener('popstate', handleRouting);
+
+        // Escape key to close detail view
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && currentDetailMovieId) {
+                closeDetailView();
+            }
+        });
+
+        // Search Handlers
+        let searchTimeout = null;
+        function handleSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const val = document.getElementById('movieSearch').value.trim();
+                const clearBtn = document.getElementById('search-clear-btn');
+                if (val) {
+                    clearBtn.classList.remove('hidden');
+                } else {
+                    clearBtn.classList.add('hidden');
+                }
+                renderFilteredCatalog();
+            }, 150);
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('movieSearch');
+            if (input) input.value = '';
+            document.getElementById('search-clear-btn').classList.add('hidden');
+            renderFilteredCatalog();
+        }
+
+        function resetFilters() {
+            clearSearch();
+            activeGenre = 'All';
+            navigateToTab('All');
+            buildGenreFilters();
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        // Stale-While-Revalidate bootstrap: Load cache first, then fetch background
+        (function initApp() {
+            try {
+                const cached = localStorage.getItem(CACHE_KEY);
+                if (cached) {
+                    const parsed = JSON.parse(cached);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        allMovies = parsed;
+                        initializeData();
+                    }
+                }
+            } catch (e) {
+                console.warn('Cache error:', e);
+            }
+            fetchSheetData();
+        })();
+    </script>
+</body>
+</html>

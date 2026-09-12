@@ -1,0 +1,6 @@
+{
+  "name": "Family Version",
+  "description": "Family Version cinema and series streaming platform with live catalog synchronization and direct Telegram streaming access.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
