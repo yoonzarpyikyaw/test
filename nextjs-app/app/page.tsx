@@ -22,7 +22,7 @@ import {
 type TabType = 'HOME' | 'TV - SERIES' | 'MOVIES' | 'COUNTRY' | 'A - Z LIST';
 
 const SHEET_CSV_URL =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vRVSH71Wsy2hyuWwPjsOvDsxZTtdU5x9qGKcDmICqaK4TyjgxJIA6c9bf9-WGhlkifD9xm3E9lYEz9q/pub?output=csv';
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vRnvVsf7phG8Ie7wqPNvPbYBd19Z6PL40HtbbMh6LKANT9OKt_1sNDxwOqp2yIAKyJhokAZDRRoZ9x_/pub?output=csv';
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<TabType>('HOME');
