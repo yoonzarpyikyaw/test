@@ -9,8 +9,14 @@ interface Props {
   params: { id: string };
 }
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const dynamicParams = true;
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  return FALLBACK_MOVIES.slice(0, 30).map((movie) => ({
+    id: movie.id,
+  }));
+}
 
 async function getMovieById(id: string): Promise<any | null> {
   if (supabase) {
